@@ -1,12 +1,13 @@
-var SOURCE = "migration-source";
-var DESTINATION = "migratition-";
+var SOURCE_FOLDER = "migration-source";
+var SOURCE_EMAIL = "source@gmail.com";
 
-var EMAIL = "migration_source@gmail.com";
+var DESTINATION_FOLDER_PREFIX = "migratition-";
+
 
 function main () {
-  var destRootDir = DriveApp.getRootFolder().createFolder(DESTINATION + Math.floor( new Date().getTime() / 1000 ));
+  var destRootDir = DriveApp.getRootFolder().createFolder(DESTINATION_FOLDER_PREFIX + Math.floor( new Date().getTime() / 1000 ));
 
-  var folders = DriveApp.searchFolders('title = "' + SOURCE + '" and "' + EMAIL + '" in owners');
+  var folders = DriveApp.searchFolders('title = "' + SOURCE_FOLDER + '" and "' + SOURCE_EMAIL + '" in owners');
   while (folders.hasNext()) {
     var folder = folders.next();
     copy(folder, destRootDir);
@@ -18,7 +19,7 @@ function copy (srcDir, destDir) {
   var files = srcDir.getFiles();
   while (files.hasNext()) {
     var file = files.next();
-    if(file.getOwner().getEmail() !== EMAIL) continue;
+    if(file.getOwner().getEmail().toLowerCase() !== SOURCE_EMAIL.toLowerCase()) continue;
 
     Logger.log("Copying " + file.getName() + " .....");
     file.makeCopy(file.getName(), destDir);
