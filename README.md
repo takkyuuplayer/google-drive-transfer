@@ -7,7 +7,7 @@ Copy ALL files/folders in `migration-source` to `migration-xxxxxxxxxxx`
 ### source@gmail.com
 
 1. Create `migration-source` folder and move all documents to the folder.
-1. Share the folder to migration_destination@gmail.com
+1. Share the folder to destination@gmail.com
 
 
 ### destination@gmail.com
