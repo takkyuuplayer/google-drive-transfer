@@ -1,5 +1,6 @@
 # google-drive-transfer
-google-drive-transfer
+
+Copy ALL files/folders in `migration-source` to `migration-xxxxxxxxxxx`
 
 ## How to use
 
