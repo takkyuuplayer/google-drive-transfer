@@ -16,4 +16,3 @@ Copy ALL files/folders in `migration-source` to `migration-xxxxxxxxxxx`
 1. Copy https://github.com/takkyuuplayer/google-drive-transfer/blob/master/transfer.js and change `EMAIL` to your source gmail address.
 1. Click Run > main
 1. Wait untill `Running function main...` finish.
-1. All `migration-source` files are copied to `migration-xxxxxxxxxxx` folder.
