@@ -9,12 +9,9 @@ function main () {
   var folders = DriveApp.searchFolders('title = "' + SOURCE + '" and "' + EMAIL + '" in owners');
   while (folders.hasNext()) {
     var folder = folders.next();
-    Logger.log(folder.getName())
-      copy(folder, destRootDir);
+    copy(folder, destRootDir);
     break;
   }
-
-  Logger.log("Done!!");
 }
 
 function copy (srcDir, destDir) {
