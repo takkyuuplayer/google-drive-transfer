@@ -1,5 +1,5 @@
 var SOURCE_FOLDER = "migration-source";
-var SOURCE_EMAIL = "source@gmail.com";
+var SOURCE_EMAIL = "Change@Here";
 
 var DESTINATION_FOLDER = "migratition-destination";
 
