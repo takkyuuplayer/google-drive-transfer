@@ -12,7 +12,7 @@ Copy files/folders OWNED BY source@gmail.com in `migration-source` to `migration
 ### destination@gmail.com
 
 1. Create new Google spreadsheet
-1. Click `Menu > Tools > Script Editor`
+1. Click `Tools > Script Editor`
 1. Copy https://github.com/takkyuuplayer/google-drive-transfer/blob/master/transfer.js and change `SOURCE_EMAIL` to source@gmail.com
 1. Click `Run > main`
 1. Wait untill `Running function main...` finish
