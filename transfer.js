@@ -5,12 +5,15 @@ var DESTINATION_FOLDER = "migratition-destination";
 
 var log = (function() {
   var sheet = SpreadsheetApp.getActiveSheet();
-  sheet.deleteRows(2, sheet.getLastRow()-1);
-  sheet.getRange('A1:D1').setValues([
-      ['documentId', 'documentName', 'Source URL', 'STATUS']
-  ]);
 
-  var curRow = 2;
+  // Initialize
+  if(sheet.getRange(1, 1).getValue().toString() !== 'documentId') {
+    sheet.clear();
+    sheet.getRange('A1:D1').setValues([
+        ['documentId', 'documentName', 'Source URL', 'STATUS']
+    ]);
+  }
+
   return function(file, status, message) {
     message = message || "";
     sheet.appendRow([
@@ -20,8 +23,21 @@ var log = (function() {
         status,
         message
     ]);
-    curRow++;
   };
+})();
+
+var copied = (function() {
+  var cp = {};
+
+  var sheet = SpreadsheetApp.getActiveSheet();
+  var range = sheet.getDataRange();
+  var values = range.getValues();
+
+  for (var row = 1; row < values.length; row++) {
+    cp[values[row][0].toString()] = true;
+  }
+
+  return cp;
 })();
 
 
@@ -34,12 +50,15 @@ function main () {
     copy(folder, dest);
     break;
   }
+
+  var sheet = SpreadsheetApp.getActiveSheet();
+  sheet.appendRow(['Done!']);
 }
 
 function destinationFolder() {
   var destFolderDir = null;
 
-  var folders = DriveApp.searchFolders('title = "' + DESTINATION_FOLDER + '" and "' + SOURCE_EMAIL + '" in owners');
+  var folders = DriveApp.searchFolders('title = "' + DESTINATION_FOLDER + '" and "' + Session.getUser().getEmail() + '" in owners');
   while (folders.hasNext()) {
     destFolderDir = folders.next();
     break;
@@ -55,6 +74,7 @@ function copy (srcDir, destDir) {
   while (files.hasNext()) {
     var file = files.next();
     if(file.getOwner().getEmail().toLowerCase() !== SOURCE_EMAIL.toLowerCase()) continue;
+    if(copied[file.getId()]) continue; // already copied
 
     var tryCount = 1;
     while(1) {
@@ -64,7 +84,8 @@ function copy (srcDir, destDir) {
         break;
       } catch (error) {
         if(tryCount++ > 3) {
-          log(file, "NG", error.message);
+          log(file, "NG", "Copy Manually");
+          break;
         } else {
           Logger.log(file.getName());
           Logger.log(error.message);
@@ -77,7 +98,17 @@ function copy (srcDir, destDir) {
   var dirs = srcDir.getFolders();
   while (dirs.hasNext()) {
     var src = dirs.next();
-    var dest = destDir.createFolder(src.getName());
+
+    if(copied[src.getId()]) continue;
+
+    var dest = (function () {
+      var itr = destDir.getFoldersByName(src.getName());
+      while(itr.hasNext()) {
+        return itr.next();
+      }
+    })() || destDir.createFolder(src.getName());
+
     copy(src, dest)
+      log(src, "OK");
   }
 }
