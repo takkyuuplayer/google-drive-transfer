@@ -1,6 +1,6 @@
 # google-drive-transfer
 
-Copy ALL files/folders in `migration-source` to `migration-destination`
+Copy files/folders OWNED BY source@gmail.com in `migration-source` to `migration-destination`
 
 ## How to use
 
