@@ -19,3 +19,4 @@ Copy ALL files/folders in `migration-source` to `migration-destination`
   * When error occur, re-run
   * Copy log is available on the spreadsheet
   * Copy log end with `Done!`
+1. Check all STATUS = `OK`. Copy manually the files/folders if you find `NG` STATUS
