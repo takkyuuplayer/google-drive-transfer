@@ -13,6 +13,7 @@ var log = (function() {
         ['documentId', 'documentName', 'Source URL', 'STATUS']
     ]);
   }
+  sheet.setFrozenRows(1);
 
   return function(file, status, message) {
     message = message || "";
