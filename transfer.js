@@ -59,7 +59,7 @@ function main () {
 function destinationFolder() {
   var destFolderDir = null;
 
-  var folders = DriveApp.searchFolders('title = "' + DESTINATION_FOLDER + '" and "' + Session.getUser().getEmail() + '" in owners');
+  var folders = DriveApp.searchFolders('title = "' + DESTINATION_FOLDER + '" and "' + Session.getActiveUser().getEmail() + '" in owners');
   while (folders.hasNext()) {
     destFolderDir = folders.next();
     break;
