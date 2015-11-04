@@ -45,9 +45,10 @@ var copied = (function() {
 function main () {
   var dest = destinationFolder();
 
-  var folders = DriveApp.searchFolders('title = "' + SOURCE_FOLDER + '" and "' + SOURCE_EMAIL + '" in owners');
+  var folders = DriveApp.searchFolders('title = "' + SOURCE_FOLDER);
   while (folders.hasNext()) {
     var folder = folders.next();
+
     copy(folder, dest);
     break;
   }
@@ -74,7 +75,6 @@ function copy (srcDir, destDir) {
   var files = srcDir.getFiles();
   while (files.hasNext()) {
     var file = files.next();
-    if(file.getOwner().getEmail().toLowerCase() !== SOURCE_EMAIL.toLowerCase()) continue;
     if(copied[file.getId()]) continue; // already copied
 
     var tryCount = 1;
